@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mer. 17 avr. 2019 à 19:55
+-- Généré le :  ven. 19 avr. 2019 à 20:01
 -- Version du serveur :  5.7.17
 -- Version de PHP :  5.6.30
 
@@ -46,13 +46,8 @@ CREATE TABLE `circuit` (
   `idCircuit` int(11) NOT NULL,
   `titreCircuit` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `descriptionCircuit` text COLLATE utf8_unicode_ci NOT NULL,
-  `dateDebutCircuit` date NOT NULL,
-  `dateFinCircuit` date NOT NULL,
   `prixCircuit` double NOT NULL,
-  `etat` bit(1) NOT NULL DEFAULT b'0',
-  `nbPlaceMin` int(11) NOT NULL,
-  `nbPlaceMax` int(11) NOT NULL,
-  `nbReservationMax` int(11) NOT NULL
+  `etat` bit(1) NOT NULL DEFAULT b'0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -77,8 +72,39 @@ CREATE TABLE `connexion` (
   `pwd` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `statut` bit(1) NOT NULL DEFAULT b'1',
   `type` enum('M','P','A') COLLATE utf8_unicode_ci NOT NULL,
+  `panier` text COLLATE utf8_unicode_ci,
   `idUser` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `detailscircuit`
+--
+
+CREATE TABLE `detailscircuit` (
+  `idCircuit` int(11) NOT NULL,
+  `dateDebutcircuit` date NOT NULL,
+  `dateFinCircuit` date NOT NULL,
+  `nbPlaceMin` int(11) NOT NULL,
+  `nbPlaceMax` int(11) NOT NULL,
+  `montantReservation` double NOT NULL,
+  `nbReservationMax` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `detailsreservation`
+--
+
+CREATE TABLE `detailsreservation` (
+  `idReservation` int(11) NOT NULL,
+  `nbAdulte` int(11) NOT NULL,
+  `nbEnfant` int(11) NOT NULL,
+  `nbBebe` int(11) NOT NULL,
+  `nbChambre` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -91,19 +117,6 @@ CREATE TABLE `etape` (
   `titreEtape` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `descriptionEtape` text COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `historique`
---
-
-CREATE TABLE `historique` (
-  `idUser` int(11) NOT NULL,
-  `idCircuit` int(11) NOT NULL,
-  `dateAchat` date NOT NULL,
-  `prixAchat` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
 
 -- --------------------------------------------------------
 
@@ -142,7 +155,22 @@ CREATE TABLE `message` (
   `idMessage` int(11) NOT NULL,
   `titreMessage` varchar(100) CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
   `texteMessage` text COLLATE utf8_unicode_ci NOT NULL,
+  `dateMessage` datetime NOT NULL,
   `idUser` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `paiement`
+--
+
+CREATE TABLE `paiement` (
+  `idPaiement` int(11) NOT NULL,
+  `datePaiement` date NOT NULL,
+  `montantPaiement` double NOT NULL,
+  `typePaiement` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `idReservation` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -153,7 +181,7 @@ CREATE TABLE `message` (
 
 CREATE TABLE `promotion` (
   `idPromotion` int(11) NOT NULL,
-  `pourcentage` double NOT NULL,
+  `pourcentagePromotion` double NOT NULL,
   `titrePromotion` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `dateDebutPromotion` datetime NOT NULL,
   `dateFinPromotion` datetime NOT NULL,
@@ -170,7 +198,8 @@ CREATE TABLE `rabais` (
   `idRabais` int(11) NOT NULL,
   `montantRabais` double NOT NULL,
   `titreRabais` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `dateRabais` datetime NOT NULL,
+  `dateDebutRabais` datetime NOT NULL,
+  `dateFinRabais` datetime NOT NULL,
   `idUser` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -182,9 +211,12 @@ CREATE TABLE `rabais` (
 
 CREATE TABLE `reservation` (
   `idReservation` int(11) NOT NULL,
+  `montantTotal` double NOT NULL,
+  `acompte` double DEFAULT NULL,
+  `annulation` bit(1) NOT NULL DEFAULT b'0',
+  `dateReservation` datetime NOT NULL,
   `idUser` int(11) NOT NULL,
-  `idCircuit` int(11) NOT NULL,
-  `dateReservation` datetime NOT NULL
+  `idCircuit` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -204,6 +236,20 @@ CREATE TABLE `restaurant` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `tarif`
+--
+
+CREATE TABLE `tarif` (
+  `idCircuit` int(11) NOT NULL,
+  `prixBebe` double NOT NULL,
+  `prixEnfant` double NOT NULL,
+  `prixAdulte` double NOT NULL,
+  `prixChambre` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `user`
 --
 
@@ -211,7 +257,7 @@ CREATE TABLE `user` (
   `idUser` int(11) NOT NULL,
   `nomUser` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `prenomUser` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `sexe` char(1) CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
+  `sexe` enum('M','F') CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
   `dateNaissance` date NOT NULL,
   `dateInscription` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -224,7 +270,8 @@ CREATE TABLE `user` (
 -- Index pour la table `activite`
 --
 ALTER TABLE `activite`
-  ADD PRIMARY KEY (`idActivite`);
+  ADD PRIMARY KEY (`idActivite`),
+  ADD KEY `idJour` (`idJour`);
 
 --
 -- Index pour la table `circuit`
@@ -247,59 +294,85 @@ ALTER TABLE `connexion`
   ADD KEY `idUser` (`idUser`);
 
 --
+-- Index pour la table `detailscircuit`
+--
+ALTER TABLE `detailscircuit`
+  ADD KEY `idCircuit` (`idCircuit`);
+
+--
+-- Index pour la table `detailsreservation`
+--
+ALTER TABLE `detailsreservation`
+  ADD KEY `idReservation` (`idReservation`);
+
+--
 -- Index pour la table `etape`
 --
 ALTER TABLE `etape`
   ADD PRIMARY KEY (`idEtape`);
 
 --
--- Index pour la table `historique`
---
-ALTER TABLE `historique`
-  ADD KEY `idCircuit` (`idCircuit`),
-  ADD KEY `idUser` (`idUser`);
-
---
 -- Index pour la table `hotel`
 --
 ALTER TABLE `hotel`
-  ADD PRIMARY KEY (`idHotel`);
+  ADD PRIMARY KEY (`idHotel`),
+  ADD KEY `idJour` (`idJour`);
 
 --
 -- Index pour la table `jour`
 --
 ALTER TABLE `jour`
-  ADD PRIMARY KEY (`idJour`);
+  ADD PRIMARY KEY (`idJour`),
+  ADD KEY `idEtape` (`idEtape`);
 
 --
 -- Index pour la table `message`
 --
 ALTER TABLE `message`
-  ADD PRIMARY KEY (`idMessage`);
+  ADD PRIMARY KEY (`idMessage`),
+  ADD KEY `idUser` (`idUser`);
+
+--
+-- Index pour la table `paiement`
+--
+ALTER TABLE `paiement`
+  ADD PRIMARY KEY (`idPaiement`),
+  ADD KEY `idReservation` (`idReservation`);
 
 --
 -- Index pour la table `promotion`
 --
 ALTER TABLE `promotion`
-  ADD PRIMARY KEY (`idPromotion`);
+  ADD PRIMARY KEY (`idPromotion`),
+  ADD KEY `idCircuit` (`idCircuit`);
 
 --
 -- Index pour la table `rabais`
 --
 ALTER TABLE `rabais`
-  ADD PRIMARY KEY (`idRabais`);
+  ADD PRIMARY KEY (`idRabais`),
+  ADD KEY `idUser` (`idUser`);
 
 --
 -- Index pour la table `reservation`
 --
 ALTER TABLE `reservation`
-  ADD PRIMARY KEY (`idReservation`);
+  ADD PRIMARY KEY (`idReservation`),
+  ADD KEY `idUser` (`idUser`),
+  ADD KEY `idCircuit` (`idCircuit`);
 
 --
 -- Index pour la table `restaurant`
 --
 ALTER TABLE `restaurant`
-  ADD PRIMARY KEY (`idResto`);
+  ADD PRIMARY KEY (`idResto`),
+  ADD KEY `idJour` (`idJour`);
+
+--
+-- Index pour la table `tarif`
+--
+ALTER TABLE `tarif`
+  ADD KEY `idCircuit` (`idCircuit`);
 
 --
 -- Index pour la table `user`
@@ -371,6 +444,12 @@ ALTER TABLE `user`
 --
 
 --
+-- Contraintes pour la table `activite`
+--
+ALTER TABLE `activite`
+  ADD CONSTRAINT `activite_ibfk_1` FOREIGN KEY (`idJour`) REFERENCES `jour` (`idJour`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Contraintes pour la table `circuit_etape`
 --
 ALTER TABLE `circuit_etape`
@@ -384,11 +463,71 @@ ALTER TABLE `connexion`
   ADD CONSTRAINT `connexion_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `historique`
+-- Contraintes pour la table `detailscircuit`
 --
-ALTER TABLE `historique`
-  ADD CONSTRAINT `historique_ibfk_1` FOREIGN KEY (`idCircuit`) REFERENCES `circuit` (`idCircuit`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `historique_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `detailscircuit`
+  ADD CONSTRAINT `detailscircuit_ibfk_1` FOREIGN KEY (`idCircuit`) REFERENCES `circuit` (`idCircuit`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `detailsreservation`
+--
+ALTER TABLE `detailsreservation`
+  ADD CONSTRAINT `detailsreservation_ibfk_1` FOREIGN KEY (`idReservation`) REFERENCES `reservation` (`idReservation`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `hotel`
+--
+ALTER TABLE `hotel`
+  ADD CONSTRAINT `hotel_ibfk_1` FOREIGN KEY (`idJour`) REFERENCES `jour` (`idJour`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `jour`
+--
+ALTER TABLE `jour`
+  ADD CONSTRAINT `jour_ibfk_1` FOREIGN KEY (`idEtape`) REFERENCES `etape` (`idEtape`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `message`
+--
+ALTER TABLE `message`
+  ADD CONSTRAINT `message_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `paiement`
+--
+ALTER TABLE `paiement`
+  ADD CONSTRAINT `paiement_ibfk_1` FOREIGN KEY (`idReservation`) REFERENCES `reservation` (`idReservation`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `promotion`
+--
+ALTER TABLE `promotion`
+  ADD CONSTRAINT `promotion_ibfk_1` FOREIGN KEY (`idCircuit`) REFERENCES `circuit` (`idCircuit`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `rabais`
+--
+ALTER TABLE `rabais`
+  ADD CONSTRAINT `rabais_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `reservation`
+--
+ALTER TABLE `reservation`
+  ADD CONSTRAINT `reservation_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `reservation_ibfk_2` FOREIGN KEY (`idCircuit`) REFERENCES `circuit` (`idCircuit`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `restaurant`
+--
+ALTER TABLE `restaurant`
+  ADD CONSTRAINT `restaurant_ibfk_1` FOREIGN KEY (`idJour`) REFERENCES `jour` (`idJour`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `tarif`
+--
+ALTER TABLE `tarif`
+  ADD CONSTRAINT `tarif_ibfk_1` FOREIGN KEY (`idCircuit`) REFERENCES `circuit` (`idCircuit`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
