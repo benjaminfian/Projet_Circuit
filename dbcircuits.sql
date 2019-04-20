@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  ven. 19 avr. 2019 à 20:01
+-- Généré le :  sam. 20 avr. 2019 à 21:10
 -- Version du serveur :  5.7.17
 -- Version de PHP :  5.6.30
 
@@ -176,6 +176,21 @@ CREATE TABLE `paiement` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `participant`
+--
+
+CREATE TABLE `participant` (
+  `idParticipant` int(11) NOT NULL,
+  `nom` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `prenom` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `age` int(11) NOT NULL,
+  `sexe` enum('M','F') COLLATE utf8_unicode_ci NOT NULL,
+  `idReservation` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `promotion`
 --
 
@@ -340,6 +355,13 @@ ALTER TABLE `paiement`
   ADD KEY `idReservation` (`idReservation`);
 
 --
+-- Index pour la table `participant`
+--
+ALTER TABLE `participant`
+  ADD PRIMARY KEY (`idParticipant`),
+  ADD KEY `idReservation` (`idReservation`);
+
+--
 -- Index pour la table `promotion`
 --
 ALTER TABLE `promotion`
@@ -414,6 +436,11 @@ ALTER TABLE `jour`
 --
 ALTER TABLE `message`
   MODIFY `idMessage` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `participant`
+--
+ALTER TABLE `participant`
+  MODIFY `idParticipant` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `promotion`
 --
@@ -497,6 +524,12 @@ ALTER TABLE `message`
 --
 ALTER TABLE `paiement`
   ADD CONSTRAINT `paiement_ibfk_1` FOREIGN KEY (`idReservation`) REFERENCES `reservation` (`idReservation`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `participant`
+--
+ALTER TABLE `participant`
+  ADD CONSTRAINT `participant_ibfk_1` FOREIGN KEY (`idReservation`) REFERENCES `reservation` (`idReservation`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `promotion`
