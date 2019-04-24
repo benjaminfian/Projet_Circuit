@@ -6,3 +6,11 @@
 
     display: inline-flex;
 }
+.hidden{display:none;}
+.cont{
+    float:right;
+}
+.btnImage {
+    background-color: blue;
+    color: #ffffff;
+}
