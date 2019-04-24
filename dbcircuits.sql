@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  sam. 20 avr. 2019 à 21:10
+-- Généré le :  mer. 24 avr. 2019 à 17:17
 -- Version du serveur :  5.7.17
 -- Version de PHP :  5.6.30
 
@@ -72,7 +72,6 @@ CREATE TABLE `connexion` (
   `pwd` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `statut` bit(1) NOT NULL DEFAULT b'1',
   `type` enum('M','P','A') COLLATE utf8_unicode_ci NOT NULL,
-  `panier` text COLLATE utf8_unicode_ci,
   `idUser` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -121,15 +120,32 @@ CREATE TABLE `etape` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `hotel`
+-- Structure de la table `hebergement`
 --
 
-CREATE TABLE `hotel` (
-  `idHotel` int(11) NOT NULL,
-  `nomHotel` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `villeHotel` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `lienHotel` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+CREATE TABLE `hebergement` (
+  `idHebergement` int(11) NOT NULL,
+  `nomHebergement` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `villeHebergement` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `lienHebergement` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `idJour` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `historique`
+--
+
+CREATE TABLE `historique` (
+  `nom` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `prenom` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `age` int(11) NOT NULL,
+  `sexe` enum('M','F') COLLATE utf8_unicode_ci NOT NULL,
+  `dateVoyage` date NOT NULL,
+  `titreCircuit` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `montant` double NOT NULL,
+  `nbParticipant` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -180,13 +196,26 @@ CREATE TABLE `paiement` (
 --
 
 CREATE TABLE `participant` (
-  `idParticipant` int(11) NOT NULL,
   `nom` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `prenom` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `age` int(11) NOT NULL,
   `sexe` enum('M','F') COLLATE utf8_unicode_ci NOT NULL,
   `idReservation` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `pension`
+--
+
+CREATE TABLE `pension` (
+  `idPension` int(11) NOT NULL,
+  `nomPension` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `villePension` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `lienPension` varchar(200) CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
+  `idJour` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
 
 -- --------------------------------------------------------
 
@@ -237,20 +266,6 @@ CREATE TABLE `reservation` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `restaurant`
---
-
-CREATE TABLE `restaurant` (
-  `idResto` int(11) NOT NULL,
-  `nomResto` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `villeResto` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `lienResto` varchar(200) CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
-  `idJour` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `tarif`
 --
 
@@ -274,7 +289,8 @@ CREATE TABLE `user` (
   `prenomUser` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `sexe` enum('M','F') CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
   `dateNaissance` date NOT NULL,
-  `dateInscription` datetime NOT NULL
+  `dateInscription` datetime NOT NULL,
+  `panier` text COLLATE utf8_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -327,10 +343,10 @@ ALTER TABLE `etape`
   ADD PRIMARY KEY (`idEtape`);
 
 --
--- Index pour la table `hotel`
+-- Index pour la table `hebergement`
 --
-ALTER TABLE `hotel`
-  ADD PRIMARY KEY (`idHotel`),
+ALTER TABLE `hebergement`
+  ADD PRIMARY KEY (`idHebergement`),
   ADD KEY `idJour` (`idJour`);
 
 --
@@ -358,8 +374,14 @@ ALTER TABLE `paiement`
 -- Index pour la table `participant`
 --
 ALTER TABLE `participant`
-  ADD PRIMARY KEY (`idParticipant`),
   ADD KEY `idReservation` (`idReservation`);
+
+--
+-- Index pour la table `pension`
+--
+ALTER TABLE `pension`
+  ADD PRIMARY KEY (`idPension`),
+  ADD KEY `idJour` (`idJour`);
 
 --
 -- Index pour la table `promotion`
@@ -382,13 +404,6 @@ ALTER TABLE `reservation`
   ADD PRIMARY KEY (`idReservation`),
   ADD KEY `idUser` (`idUser`),
   ADD KEY `idCircuit` (`idCircuit`);
-
---
--- Index pour la table `restaurant`
---
-ALTER TABLE `restaurant`
-  ADD PRIMARY KEY (`idResto`),
-  ADD KEY `idJour` (`idJour`);
 
 --
 -- Index pour la table `tarif`
@@ -422,10 +437,10 @@ ALTER TABLE `circuit`
 ALTER TABLE `etape`
   MODIFY `idEtape` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT pour la table `hotel`
+-- AUTO_INCREMENT pour la table `hebergement`
 --
-ALTER TABLE `hotel`
-  MODIFY `idHotel` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `hebergement`
+  MODIFY `idHebergement` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `jour`
 --
@@ -437,10 +452,10 @@ ALTER TABLE `jour`
 ALTER TABLE `message`
   MODIFY `idMessage` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT pour la table `participant`
+-- AUTO_INCREMENT pour la table `pension`
 --
-ALTER TABLE `participant`
-  MODIFY `idParticipant` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `pension`
+  MODIFY `idPension` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `promotion`
 --
@@ -456,11 +471,6 @@ ALTER TABLE `rabais`
 --
 ALTER TABLE `reservation`
   MODIFY `idReservation` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `restaurant`
---
-ALTER TABLE `restaurant`
-  MODIFY `idResto` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `user`
 --
@@ -502,10 +512,10 @@ ALTER TABLE `detailsreservation`
   ADD CONSTRAINT `detailsreservation_ibfk_1` FOREIGN KEY (`idReservation`) REFERENCES `reservation` (`idReservation`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `hotel`
+-- Contraintes pour la table `hebergement`
 --
-ALTER TABLE `hotel`
-  ADD CONSTRAINT `hotel_ibfk_1` FOREIGN KEY (`idJour`) REFERENCES `jour` (`idJour`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `hebergement`
+  ADD CONSTRAINT `hebergement_ibfk_1` FOREIGN KEY (`idJour`) REFERENCES `jour` (`idJour`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `jour`
@@ -532,6 +542,12 @@ ALTER TABLE `participant`
   ADD CONSTRAINT `participant_ibfk_1` FOREIGN KEY (`idReservation`) REFERENCES `reservation` (`idReservation`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Contraintes pour la table `pension`
+--
+ALTER TABLE `pension`
+  ADD CONSTRAINT `pension_ibfk_1` FOREIGN KEY (`idJour`) REFERENCES `jour` (`idJour`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Contraintes pour la table `promotion`
 --
 ALTER TABLE `promotion`
@@ -549,12 +565,6 @@ ALTER TABLE `rabais`
 ALTER TABLE `reservation`
   ADD CONSTRAINT `reservation_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `reservation_ibfk_2` FOREIGN KEY (`idCircuit`) REFERENCES `circuit` (`idCircuit`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `restaurant`
---
-ALTER TABLE `restaurant`
-  ADD CONSTRAINT `restaurant_ibfk_1` FOREIGN KEY (`idJour`) REFERENCES `jour` (`idJour`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `tarif`
