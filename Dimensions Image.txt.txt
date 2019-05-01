@@ -1,3 +1,6 @@
 
-1127 x 724  slide
-700 x 799 offre
+circuits background	1127 x 724: une image
+ 700 x 799: 1 pour un circuit et 1 pour chaque étape.
+700x799 ou plus: 3 pour chaque étape
+
+tous les images devraient être en très bon état.
