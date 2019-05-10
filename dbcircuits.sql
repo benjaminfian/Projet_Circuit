@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  ven. 10 mai 2019 à 18:48
+-- Généré le :  ven. 10 mai 2019 à 19:08
 -- Version du serveur :  5.7.17
 -- Version de PHP :  5.6.30
 
@@ -258,7 +258,7 @@ CREATE TABLE `paiement` (
 CREATE TABLE `participant` (
   `nom` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `prenom` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `age` int(11) NOT NULL,
+  `dateNaissanceParticipant` date NOT NULL,
   `sexe` enum('M','F') COLLATE utf8_unicode_ci NOT NULL,
   `idReservation` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -314,7 +314,7 @@ CREATE TABLE `rabais` (
 CREATE TABLE `reservation` (
   `idReservation` int(11) NOT NULL,
   `montantTotal` double NOT NULL,
-  `acompte` double DEFAULT NULL,
+  `PourcentageAcompte` double DEFAULT NULL,
   `annulation` bit(1) NOT NULL DEFAULT b'0',
   `dateReservation` datetime NOT NULL,
   `idUser` int(11) NOT NULL,
