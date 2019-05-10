@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mer. 24 avr. 2019 à 17:17
+-- Généré le :  ven. 10 mai 2019 à 18:48
 -- Version du serveur :  5.7.17
 -- Version de PHP :  5.6.30
 
@@ -29,12 +29,23 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `activite` (
-  `idActivite` int(11) NOT NULL,
-  `titreActivite` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `villeActivite` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `descriptionActivite` text COLLATE utf8_unicode_ci NOT NULL,
   `idJour` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Déchargement des données de la table `activite`
+--
+
+INSERT INTO `activite` (`descriptionActivite`, `idJour`) VALUES
+('activité circuit1 etape1 jour1', 1),
+('activité circuit1 etape1 jour2', 2),
+('activité circuit1 etape2 jour1', 3),
+('activité circuit1 etape2 jour2', 4),
+('activité circuit2 etape1 jour1', 5),
+('activité circuit2 etape1 jour2', 6),
+('activité circuit2 etape2 jour1', 7),
+('activité circuit2 etape2 jour2', 8);
 
 -- --------------------------------------------------------
 
@@ -50,6 +61,15 @@ CREATE TABLE `circuit` (
   `etat` bit(1) NOT NULL DEFAULT b'0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Déchargement des données de la table `circuit`
+--
+
+INSERT INTO `circuit` (`idCircuit`, `titreCircuit`, `descriptionCircuit`, `prixCircuit`, `etat`) VALUES
+(1, 'test1', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.', 10000, b'1'),
+(2, 'test2', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.', 20000, b'0'),
+(3, 'test3', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.', 30000, b'1');
+
 -- --------------------------------------------------------
 
 --
@@ -60,6 +80,16 @@ CREATE TABLE `circuit_etape` (
   `idCircuit` int(11) NOT NULL,
   `idEtape` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Déchargement des données de la table `circuit_etape`
+--
+
+INSERT INTO `circuit_etape` (`idCircuit`, `idEtape`) VALUES
+(1, 1),
+(1, 2),
+(2, 3),
+(2, 4);
 
 -- --------------------------------------------------------
 
@@ -83,13 +113,21 @@ CREATE TABLE `connexion` (
 
 CREATE TABLE `detailscircuit` (
   `idCircuit` int(11) NOT NULL,
-  `dateDebutcircuit` date NOT NULL,
+  `dateDebutCircuit` date NOT NULL,
   `dateFinCircuit` date NOT NULL,
   `nbPlaceMin` int(11) NOT NULL,
   `nbPlaceMax` int(11) NOT NULL,
-  `montantReservation` double NOT NULL,
-  `nbReservationMax` int(11) NOT NULL
+  `montantReservation` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Déchargement des données de la table `detailscircuit`
+--
+
+INSERT INTO `detailscircuit` (`idCircuit`, `dateDebutCircuit`, `dateFinCircuit`, `nbPlaceMin`, `nbPlaceMax`, `montantReservation`) VALUES
+(1, '2019-06-01', '2019-06-30', 3, 10, 1000),
+(2, '2019-07-01', '2019-07-31', 4, 20, 2000),
+(3, '2019-08-01', '2019-08-31', 5, 30, 3000);
 
 -- --------------------------------------------------------
 
@@ -117,6 +155,16 @@ CREATE TABLE `etape` (
   `descriptionEtape` text COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Déchargement des données de la table `etape`
+--
+
+INSERT INTO `etape` (`idEtape`, `titreEtape`, `descriptionEtape`) VALUES
+(1, 'etape1Circuit1', 'blablabla'),
+(2, 'etape2Circuit1', 'blablabla'),
+(3, 'Etape1Circuit2', 'blablabla'),
+(4, 'Etape2Circuit2', 'blablabla');
+
 -- --------------------------------------------------------
 
 --
@@ -124,9 +172,7 @@ CREATE TABLE `etape` (
 --
 
 CREATE TABLE `hebergement` (
-  `idHebergement` int(11) NOT NULL,
   `nomHebergement` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `villeHebergement` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `lienHebergement` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `idJour` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
@@ -156,10 +202,24 @@ CREATE TABLE `historique` (
 
 CREATE TABLE `jour` (
   `idJour` int(11) NOT NULL,
-  `titreJour` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `descriptionJour` text COLLATE utf8_unicode_ci NOT NULL,
+  `titreJour` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `descriptionJour` text COLLATE utf8_unicode_ci,
   `idEtape` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Déchargement des données de la table `jour`
+--
+
+INSERT INTO `jour` (`idJour`, `titreJour`, `descriptionJour`, `idEtape`) VALUES
+(1, 'Circuit1 Etape1 jour1', 'blablabla', 1),
+(2, 'Circuit1 Etape1 jour2', 'blablabla', 1),
+(3, 'Circuit1 etape2 jour1', 'blablabla', 2),
+(4, 'Circuit1 etape2 jour2', 'blablabla', 2),
+(5, 'Circuit2 etape1 jour1', 'blablabla', 3),
+(6, 'circuit2 etape1 jour2', 'blablabla', 3),
+(7, 'circuit2 etape2 jour1', 'blablabla', 4),
+(8, 'circuit2 etape2 jour2', 'blablabla', 4);
 
 -- --------------------------------------------------------
 
@@ -169,7 +229,7 @@ CREATE TABLE `jour` (
 
 CREATE TABLE `message` (
   `idMessage` int(11) NOT NULL,
-  `titreMessage` varchar(100) CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
+  `titreMessage` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `texteMessage` text COLLATE utf8_unicode_ci NOT NULL,
   `dateMessage` datetime NOT NULL,
   `idUser` int(11) NOT NULL
@@ -210,9 +270,7 @@ CREATE TABLE `participant` (
 --
 
 CREATE TABLE `pension` (
-  `idPension` int(11) NOT NULL,
   `nomPension` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `villePension` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `lienPension` varchar(200) CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
   `idJour` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
@@ -301,7 +359,6 @@ CREATE TABLE `user` (
 -- Index pour la table `activite`
 --
 ALTER TABLE `activite`
-  ADD PRIMARY KEY (`idActivite`),
   ADD KEY `idJour` (`idJour`);
 
 --
@@ -346,7 +403,6 @@ ALTER TABLE `etape`
 -- Index pour la table `hebergement`
 --
 ALTER TABLE `hebergement`
-  ADD PRIMARY KEY (`idHebergement`),
   ADD KEY `idJour` (`idJour`);
 
 --
@@ -380,7 +436,6 @@ ALTER TABLE `participant`
 -- Index pour la table `pension`
 --
 ALTER TABLE `pension`
-  ADD PRIMARY KEY (`idPension`),
   ADD KEY `idJour` (`idJour`);
 
 --
@@ -422,40 +477,25 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT pour la table `activite`
---
-ALTER TABLE `activite`
-  MODIFY `idActivite` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT pour la table `circuit`
 --
 ALTER TABLE `circuit`
-  MODIFY `idCircuit` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idCircuit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT pour la table `etape`
 --
 ALTER TABLE `etape`
-  MODIFY `idEtape` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `hebergement`
---
-ALTER TABLE `hebergement`
-  MODIFY `idHebergement` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idEtape` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT pour la table `jour`
 --
 ALTER TABLE `jour`
-  MODIFY `idJour` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idJour` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT pour la table `message`
 --
 ALTER TABLE `message`
   MODIFY `idMessage` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `pension`
---
-ALTER TABLE `pension`
-  MODIFY `idPension` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `promotion`
 --
