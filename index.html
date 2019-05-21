@@ -1,0 +1,597 @@
+<html>
+
+<head>
+    <title>VaresAnto &mdash; Circuits</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,700,900|Display+Playfair:200,300,400,700"> 
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+
+    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.7/build/mediaelementplayer.min.css">
+
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/style.css">
+    
+  </head>
+  <body>
+  
+  <div class="site-wrap">
+
+    <div class="site-mobile-menu">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
+    
+    <header class="site-navbar py-1" role="banner">
+
+      <div class="container">
+        <div class="row align-items-center">
+          
+          <div class="col-6 col-xl-2">
+              <a href="index.html"><img src="images/logo.png" href="index.html" width="80%"></a>   
+          </div>
+          <div class="col-10 col-md-8 d-none d-xl-block">
+            <nav class="site-navigation position-relative text-right text-lg-center" role="navigation">
+
+              <ul class="site-menu js-clone-nav mx-auto d-none d-lg-block">
+                <li class="active">
+                  <a href="index.html">Accueil</a>
+                </li>
+                <li class="has-children">
+                  <a href="circuits.html">Circuits</a>
+                  <ul class="dropdown">
+                    <li><a href="#">Trésors de Russie</a></li>
+                    <li><a href="#">Rêve australien</a></li>
+                    <li><a href="#">Safari</a></li>
+                    <li><a href="#">Splendeur neige</a></li>
+                  </ul>
+                </li>
+                <li><a href="discount.html">Promotions</a></li>
+                <li><a href="about.html">A propos</a></li>
+                <li><a href="contact.php">Contact</a></li>
+              </ul>
+            </nav>
+          </div>
+
+          <div class="col-6 col-xl-2 text-right">
+            <div class="d-none d-xl-inline-block">
+              <nav class="site-navigation position-relative text-right text-lg-center" role="navigation">
+              <ul class="site-menu js-clone-nav ml-auto list-unstyled d-flex text-right mb-0" data-class="social">
+
+                <li>
+                  <a href="#"  class="pl-0 pr-3 text-black" data-toggle="modal" data-target="#devenirMembre"><span class="icon-user-plus"></span></a>
+                </li>
+                <li>
+                  <a href="#" class="pl-3 pr-3 text-black" data-toggle="modal" data-target="#connecter"><span class="icon-sign-in"></span></a>
+                </li>
+                                
+                <li class="has-children">
+                    <a class="pl-3 pr-3 text-black" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="icon-language2"></span></a>
+                    <ul class="dropdown">
+                        <li><a class="dropdown-item" href="#" onclick="afficherSafari();"><img src="images/drapeau_fr.png" width="25px" >&nbsp;&nbsp;&nbsp;Français</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="afficherCroisiere();"><img src="images/drapeau_en.jpg" width="25px">&nbsp;&nbsp;&nbsp;Anglais</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="afficherHistorique();"><img src="images/drapeau_es.png" width="25px">&nbsp;&nbsp;&nbsp;Espagnol</a></li>
+                      </ul>
+                  </li>
+
+              </ul>
+              </nav>
+            </div>
+<!---->
+<div class="modal fade" id="connecter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        
+        <h4 class="modal-title" id="myModalLabel">Connexion</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-signin" id="formLogin" method="POST">
+            
+            <input type="email" id="email_"  name="logEmail" class="form-control" placeholder="Entrez votre email" required autofocus><br>
+            <input type="password" name="pwd" id="pwd" class="form-control" placeholder="Entrez votre password" required><br>
+            
+            <a class="btn btn-lg btn-primary btn-block" onclick="login()">Se connecter</a><br>
+            <div class="row justify-content-md-center">
+           <a><img src="images/fb.png" style="width:315px;cursor:pointer"></a>
+            </div>
+          </form><span id="confirmFormLoginmembre"></span>
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+       
+      </div>
+    </div>
+  </div>
+</div>
+<!---->
+<div class="modal fade" id="devenirMembre" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              
+                    <h1 class="h3 mb-3 font-weight-normal">Devenir membre</h1>
+            </div>
+            <div class="modal-body">
+                    <form id="formEnregMembre" class="" method="POST" enctype="multipart/form-data">
+
+                            <!-- Form Name -->
+                           
+                              <input id="nom" name="nom" type="text" placeholder="Entrez votre nom" class="form-control input-md" required><br>
+                              <input id="prenom" name="prenom" type="text" placeholder="Entrez votre prénom" class="form-control input-md" required><br>
+                              
+                              <input id="dateNaissance" type="date" class="form-control input-md" name="dateNaissance" placeholder="Entrez votre date de naissance"  required />
+                              <!--  <script>
+                                    $('#dateNaissance').datepicker({
+                                        uiLibrary: 'bootstrap4'
+                                    });
+                                </script>
+                                -->
+                              <br>
+                             <div class="row justify-content-md-center">
+                                 <div class="col col-md-6 my-auto">
+                              <label class="radio-inline" for="sexe-0">
+                                  <input type="radio"  name="sexe" id="sexe-0" value="F" >
+                                  Feminin
+                                </label> 
+                            </div>
+                            <div class="col col-md-6 my-auto">
+                                <label class="radio-inline" for="sexe-1">
+                                  <input type="radio" name="sexe" id="sexe-1" value="M">
+                                  Masculin
+                                </label>
+                            </div>
+                            </div>
+                                <input id="email" name="email" type="email" placeholder="Entrez votre e-mail" class="form-control input-md" required=""><br>
+                              
+                               <input id="pass" name="pass" type="password" placeholder="Entrez votre mot de passe" class="form-control input-md" required=""><br>
+                            
+                                <input id="pwConfirmation" name="pwConfirmation" type="password" placeholder="Saisissez le mot de passe à nouveau" class="form-control input-md" required=""><br>
+                          
+                            </form><span id="confirmFormEnregmembre"></span>
+            </div>
+              
+            <div class="modal-footer">                
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+              <button type="submit" class="btn btn-primary" onclick="enregistrerMembre()">S'inscrire</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!---->
+            <div class="d-inline-block d-xl-none ml-md-0 mr-auto py-3" style="position: relative; top: 3px;"><a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
+
+          </div>
+
+        </div>
+      </div>
+      
+    </header>
+
+  
+
+   
+
+    <div class="slide-one-item home-slider owl-carousel">
+      
+      <div class="site-blocks-cover overlay" style="background-image: url(images/slide.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+        <div class="container">
+          <div class="row align-items-center justify-content-center text-center">
+
+            <div class="col-md-8" data-aos="fade-up" data-aos-delay="400">
+              
+
+              <h1 class="text-white font-weight-light">VaresAnto, un voyage d'émotions!</h1>
+              <p class="mb-5"></p>
+              <p><a href="circuits.html" class="btn btn-primary py-3 px-5 text-white">Réserver maintenant!</a></p>
+
+            </div>
+          </div>
+        </div>
+      </div>  
+
+      <div class="site-blocks-cover overlay" style="background-image: url(images/slide1.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+        <div class="container">
+          <div class="row align-items-center justify-content-center text-center">
+
+            <div class="col-md-8" data-aos="fade-up" data-aos-delay="400">
+              <h1 class="text-white font-weight-light">Prenez le temps de tout vivre!</h1>
+              <p class="mb-5"></p>
+              <p><a href="#" class="btn btn-primary py-3 px-5 text-white">Réserver maintenant!</a></p>
+            </div>
+          </div>
+        </div>
+      </div>  
+
+      <div class="site-blocks-cover overlay" style="background-image: url(images/slide2.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+        <div class="container">
+          <div class="row align-items-center justify-content-center text-center">
+
+            <div class="col-md-8" data-aos="fade-up" data-aos-delay="400">
+              <h1 class="text-white font-weight-light">Tout ce dont vous rêvez!</h1>
+              <p class="mb-5"></p>
+              <p><a href="#" class="btn btn-primary py-3 px-5 text-white">Réserver maintenant!</a></p>
+            </div>
+          </div>
+        </div>
+      </div>  
+
+      <div class="site-blocks-cover overlay" style="background-image: url(images/slide3.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+        <div class="container">
+          <div class="row align-items-center justify-content-center text-center">
+
+            <div class="col-md-8" data-aos="fade-up" data-aos-delay="400">
+              <h1 class="text-white font-weight-light">Tous les rêves possibles!</h1>
+              <p class="mb-5"></p>
+              <p><a href="#" class="btn btn-primary py-3 px-5 text-white">Réserver maintenant!</a></p>
+            </div>
+          </div>
+        </div>
+      </div>  
+
+    </div>
+
+
+    <div class="site-section">
+      
+      <div class="container overlap-section">
+        <div class="row">
+          <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+            <a href="#" class="unit-1 text-center">
+              <img src="images/img_2.jpg" alt="Image" class="img-fluid">
+              <div class="unit-1-text">
+                <h3 class="unit-1-heading">Décrivez votre experience</h3>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+            <a href="#" class="unit-1 text-center">
+              <img src="images/img_1.jpg" alt="Image" class="img-fluid">
+              <div class="unit-1-text">
+                <h3 class="unit-1-heading">Explorez nouvelles destinations</h3>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+            <a href="#" class="unit-1 text-center">
+              <img src="images/img_3.jpg" alt="Image" class="img-fluid">
+              <div class="unit-1-text">
+                <h3 class="unit-1-heading">Les meilleures souvenirs</h3>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    
+    </div>
+
+
+    
+    <div class="site-section block-13 bg-light">
+  
+
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+          <div class="col-md-7">
+            <h2 class="font-weight-light text-black text-center">Témoignages</h2>
+          </div>
+        </div>
+
+        <div class="nonloop-block-13 owl-carousel">
+
+          <div class="item">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-6 mb-5">
+                  <img src="images/img_1.jpg" alt="Image" class="img-md-fluid">
+                </div>
+                <div class="overlap-left col-lg-6 bg-white p-md-5 align-self-center">
+                  <p class="text-black lead">&ldquo;Safari le plus étonnant et les meilleurs guides!
+                      C'était donc notre deuxième Safari, mais celui-ci a été l'expérience la plus extraordinaire - meilleur que ce à quoi nous avions rêvé!
+                      Nous sommes allés dans 4 pavillons différents, tous si beaux, avec beaucoup de gros animaux juste devant notre chambre et notre restaurant, jour et nuit.
+                      <br>         
+                      Nous serons de retour!
+                      
+                                      
+                      &rdquo;</p>
+                  <p class="">&mdash; <em>Tim</em> &mdash; Allemagne</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-6 mb-5">
+                  <img src="images/img_2.jpg" alt="Image" class="img-md-fluid">
+                </div>
+                <div class="overlap-left col-lg-6 bg-white p-md-5 align-self-center">
+                  <p class="text-black lead">&ldquo;Emplacement et service fabuleux. 
+                  VaresAnto, était une étagère supérieure dans tous les aspects.
+                  Il était gentil, attentionné et expérimenté. Je recommanderais cette activité et cette tenue pour
+                   toute activité en plein air et amusante. Merci pour cette belle aventure et ce souvenir.
+                    &rdquo;</p>
+                  <p class="">&mdash; <em>Lizalie</em> &mdash; Denver, Colorado</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-6 mb-5">
+                  <img src="images/img_4.jpg" alt="Image" class="img-md-fluid">
+                </div>
+                <div class="overlap-left col-lg-6 bg-white p-md-5 align-self-center">
+                  <p class="text-black lead">&ldquo;Trésors de Russie a été excellente du début à la fin. 
+                      Notre guide de VaresAnto était incroyable, sa connaissance de l'histoire russe était extraordinaire et sa capacité
+                       à se rappeler des faits et des chiffres était impressionnante. En plus, elle était si agréable et chaleureuse que tout
+                        notre groupe l'aimait depuis le début. Soyez prêt pour plusieurs jours très chargés, mais cela en vaut la peine.
+                         Je recommande vivement VaresAnto.
+                      
+                      &rdquo;</p>
+                  <p class="">&mdash; <em>Charline</em> &mdash; Canada</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="site-section">
+      
+      <div class="container">
+        <div class="row justify-content-center mb-5">
+          <div class="col-md-7 text-center">
+            <h2 class="font-weight-light text-black">Nos Destinations</h2>
+            <p class="color-black-opacity-5">Choisissez Votre Prochaine Destination</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
+            <a href="#" class="unit-1 text-center">
+              <img src="images/01-greece.jpg" alt="Image" class="img-fluid">
+              <div class="unit-1-text">
+                <strong class="text-primary mb-2 d-block">$5900</strong>
+                <h3 class="unit-1-heading">Histoire du monde</h3>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
+            <a href="#" class="unit-1 text-center">
+              <img src="images/02-rome.jpg" alt="Image" class="img-fluid">
+              <div class="unit-1-text">
+                <strong class="text-primary mb-2 d-block">$11390</strong>
+                <h3 class="unit-1-heading">Monde antique</h3>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
+            <a href="#" class="unit-1 text-center">
+              <img src="images/03-japan.jpg" alt="Image" class="img-fluid">
+              <div class="unit-1-text">
+                <strong class="text-primary mb-2 d-block">$5900</strong>
+                <h3 class="unit-1-heading">Japan en tout temps</h3>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
+            <a href="#" class="unit-1 text-center">
+              <img src="images/04-dubai.jpg" alt="Image" class="img-fluid">
+              <div class="unit-1-text">
+                <strong class="text-primary mb-2 d-block">$8200</strong>
+                <h3 class="unit-1-heading">Сhameaux, déserts et toi</h3>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
+            <a href="#" class="unit-1 text-center">
+              <img src="images/05-london.jpg" alt="Image" class="img-fluid">
+              <div class="unit-1-text">
+                <strong class="text-primary mb-2 d-block">$21290</strong>
+                <h3 class="unit-1-heading">Des secrets d'Elizabeth II </h3>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
+            <a href="#" class="unit-1 text-center">
+              <img src="images/06-australia.jpg" alt="Image" class="img-fluid">
+              <div class="unit-1-text">
+                <strong class="text-primary mb-2 d-block">$12390</strong>
+                <h3 class="unit-1-heading">Opéra australien</h3>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    
+    </div>
+
+    <!-- <div class="site-section bg-light">
+      
+    </div> -->
+
+
+    <div class="site-blocks-cover overlay inner-page-cover" style="background-image: url(images/hero_bg_2.jpg); background-attachment: fixed;">
+      <div class="container">
+        <div class="row align-items-center justify-content-center text-center">
+
+          <div class="col-md-7" data-aos="fade-up" data-aos-delay="400">
+            <a href="https://vimeo.com/channels/staffpicks/93951774" class="play-single-big mb-4 d-inline-block popup-vimeo"><span class="icon-play"></span></a>
+            <h2 class="text-white font-weight-light mb-5 h1">Découvrez Nos Services Exceptionnels</h2>
+            
+          </div>
+        </div>
+      </div>
+    </div>  
+
+    <div id="services" class="site-section bg-light">
+      <div class="container">
+        <div class="row justify-content-center mb-5">
+          <div class="col-md-7 text-center">
+            <h2 class="font-weight-light text-black">Nos Services</h2>
+            <p class="color-black-opacity-5">Nous Proposons Les Services Suivants</p>
+          </div>
+        </div>
+        <div class="row align-items-stretch">
+          <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
+            <div class="unit-4 d-flex">
+              <div class="unit-4-icon mr-4"><span class="text-primary flaticon-airplane"></span></div>
+              <div>
+                <h3>Vols</h3>
+                <p>Vous bénéficiez ainsi d'un espace individuel plus confortable vous permettant de travailler ou de vous détendre à bord en toute sérénité.</p>
+                <p><a href="#">Détails</a></p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
+            <div class="unit-4 d-flex">
+              <div class="unit-4-icon mr-4"><span class="text-primary flaticon-route"></span></div>
+              <div>
+                <h3>Circuits</h3>
+                <p>Les meilleures décisions de voyage se prennent avec VaresAnto.</p>
+                <p><a href="#">Détails</a></p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
+            <div class="unit-4 d-flex">
+              <div class="unit-4-icon mr-4"><span class="text-primary flaticon-hotel"></span></div>
+              <div>
+                <h3>Hébergements</h3>
+                <p>Des hébergements uniques vous attendent... nous proposons bien plus que des hôtels!</p>
+                <p><a href="#">Détails</a></p>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+
+    
+    
+    <div class="site-section border-top">
+      <div class="container">
+        <div class="row text-center">
+          <div class="col-md-12">
+            <h2 class="mb-5 text-black">Voulez-vous voyager avec nous?</h2>
+            <p class="mb-0"><a href="circuits.html" class="btn btn-primary py-3 px-5 text-white">Réserver maintenant!</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <footer class="site-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="mb-5">
+              <h3 class="footer-heading mb-4">Adresse</h3>
+              <p> 2030, boulevard Pie-IX</br>
+                  4ème étage, Bureau 430</br>
+                  Montréal (Québec) H1V 2C8
+              </p>
+            </div> 
+          </div>
+          <div class="col-lg-4 mb-5 mb-lg-0">
+            <div class="row mb-5">
+              <div class="col-md-12">
+                <h3 class="footer-heading mb-4">Navigation</h3>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <ul class="list-unstyled">
+                  <li><a href="index.html">Accueil</a></li>
+                  <li><a href="circuits.html">Circuits</a></li>
+                  <li><a href="discount.html">Promotions</a></li>
+                </ul>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <ul class="list-unstyled">
+                  <li><a href="contact.html">Contact</a></li>
+                  <li><a href="#services">Services</a></li>
+                  <li><a href="about.html">A propos</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 mb-5 mb-lg-0">
+            <div class="mb-5">
+              <h3 class="footer-heading mb-4">Abonnez-vous</h3>
+              <p>Abonnez-vous à notre bulletin et obtenez 5% de réduction sur votre premier Circuit.</p>
+              <form action="#" method="post">
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control border-secondary text-white bg-transparent" placeholder="Entrer Email" aria-label="Enter Email" aria-describedby="button-addon2">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary text-white" type="button" id="button-addon2">Abonner</button>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+
+          </div>
+          
+        </div>
+        <div class="row pt-5 mt-5 text-center">
+          <div class="col-md-12">
+            <div class="mb-5">
+              <a href="#" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
+              <a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
+              <a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
+              <a href="#" class="pl-3 pr-3"><span class="icon-linkedin"></span></a>
+            </div>
+
+            <p>
+            &copy; <script>document.write(new Date().getFullYear());</script>  Tous droits réservés.
+            <a href="index.html" target=""> VaresAnto</a> <i class="icon-heart-o" aria-hidden="true"></i>
+            </p>
+          </div>
+          
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/jquery.countdown.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/bootstrap-datepicker.min.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/main.js"></script>
+  <script src="membres/membreRequetes.js"></script>
+  <script src="membres/membreControleurVue.js"></script>    
+  </body>
+</html>
