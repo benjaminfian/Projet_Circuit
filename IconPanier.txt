@@ -1,0 +1,10 @@
+
+ <?php
+                if (isset ($_SESSION['typeUser'])=="A" || isset ($_SESSION['typeUser'])=="M" 
+                { 
+                  
+                  echo '<li>
+                    <a href="typePanier.html"  class="pl-0 pr-3 text-black" data-toggle="modal" id="panier"><span class="icon-shopping-cart"></span></a>
+                  </li>';
+                }                  
+                ?>
